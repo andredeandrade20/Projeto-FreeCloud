@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from sklearn.tree import export_graphviz
 
 def Tree():
-    XmTrain, XmTest, ymTrain, ymTest = pre.TrainTestSet()
+    XmTrain, XmTest, ymTrain, ymTest = pre.TrainTestMedia()
     clf = DecisionTreeClassifier(criterion = 'entropy', splitter = 'best', max_depth = 6)
     clf = clf.fit(XmTrain, ymTrain)
     M_resultado = clf.predict(XmTest)
@@ -16,7 +16,7 @@ def Tree():
 
 def ScoreTree():
     M_resultado, clf = Tree()
-    XmTrain, XmTest, ymTrain, ymTest = pre.TrainTestSet()
+    XmTrain, XmTest, ymTrain, ymTest = pre.TrainTestMedia()
     score_Train_M = clf.score(XmTrain,ymTrain)
     score_Test_M = clf.score(XmTest,ymTest)
     score_resultado_M = clf.score(XmTest,M_resultado)
