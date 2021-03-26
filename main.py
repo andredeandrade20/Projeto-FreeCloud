@@ -8,13 +8,21 @@ import tree_alta
 import tree_media
 import tree_baixa
 import tree_superficie
+import nb_alta
+import nb_media
+import nb_baixa
+import nb_superficie
+import svm_alta
+import svm_media
+import svm_baixa
+import svm_superficie
 import preprocessing as pre
 
 def RunScore():
-    a = knn_superficie.ScoreKNN()
-    b = knn_baixa.ScoreKNN()
-    c = knn_media.ScoreKNN()
-    d = knn_alta.ScoreKNN()
+    a = svm_superficie.ScoreSVC()
+    b = svm_baixa.ScoreSVC()
+    c = svm_media.ScoreSVC()
+    d = svm_alta.ScoreSVC()
 
 
 def RunResultados():

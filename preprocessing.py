@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler
 
 def loadData():
     chunks = []
-    for chunk in pd.read_csv('C:/Users/Ygoor/Desktop/Freelas/Projeto FreeCloud/dados.csv', encoding = 'UTF-8', low_memory = True, chunksize=1000):
+    for chunk in pd.read_csv('C:/Users/Ygoor/Desktop/Freelas/FreeCloud/dados.csv', encoding = 'UTF-8', low_memory = True, chunksize=1000):
         chunks.append(chunk)
     df = pd.concat(chunks)
     return df
