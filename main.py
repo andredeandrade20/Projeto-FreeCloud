@@ -19,10 +19,10 @@ import svm_superficie
 import preprocessing as pre
 
 def RunScore():
-    a = svm_superficie.ScoreSVC()
-    b = svm_baixa.ScoreSVC()
-    c = svm_media.ScoreSVC()
-    d = svm_alta.ScoreSVC()
+    a = tree_superficie.ScoreTree()
+    b = tree_baixa.ScoreTree()
+    c = tree_media.ScoreTree()
+    d = tree_alta.ScoreTree()
 
 
 def RunResultados():
@@ -37,4 +37,4 @@ def RunResultados():
 
 
 if __name__ == "__main__":
-    RunScore()
+    tree_baixa.ConfusionMatrixScore()

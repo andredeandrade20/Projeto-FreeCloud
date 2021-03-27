@@ -7,10 +7,11 @@ from sklearn import metrics
 import matplotlib.pyplot as plt
 from sklearn.model_selection import cross_val_score
 from mlxtend.plotting import plot_decision_regions
+from sklearn.metrics import confusion_matrix
 
 def Tree():
     XsTrain, XsTest, ysTrain, ysTest = pre.TrainTestSuperficie()
-    clf = DecisionTreeClassifier(criterion = 'entropy', splitter = 'best', max_depth = 5, min_samples_split = 32, max_features = 'sqrt')
+    clf = DecisionTreeClassifier(criterion = 'entropy', splitter = 'best', max_depth = 12)
     clf = clf.fit(XsTrain, ysTrain)
     S_resultado = clf.predict(XsTest)
     return S_resultado, clf
@@ -28,6 +29,12 @@ def GraphViz():
     S_resultado, clf = Tree()
     XsTrain, XsTest, ysTrain, ysTest = pre.TrainTestSuperficie()
     export_graphviz(clf, out_file = 'tree_superficie.dot')
+
+def ConfusionMatrixScore():
+    S_resultado, clf = Tree()
+    XsTrain, XsTest, ysTrain, ysTest = pre.TrainTestSuperficie()
+    confusionMatrix_S = confusion_matrix(ysTest, S_resultado)
+    print(confusionMatrix_S)
 
 ## Não usadas
 def Cross_Score():
