@@ -6,6 +6,7 @@ from sklearn.tree import export_graphviz
 from sklearn import metrics
 import matplotlib.pyplot as plt
 from sklearn.tree import export_graphviz
+from sklearn.metrics import confusion_matrix
 
 def Tree():
     XmTrain, XmTest, ymTrain, ymTest = pre.TrainTestMedia()
@@ -22,6 +23,13 @@ def ScoreTree():
     score_resultado_M = clf.score(XmTest,M_resultado)
     print(score_Train_M, score_Test_M, score_resultado_M)
     return score_Train_M, score_Test_M, score_resultado_M
+
+def ConfusionMatrixScore():
+    M_resultado, clf = Tree()
+    XmTrain, XmTest, ymTrain, ymTest = pre.TrainTestMedia()
+    confusionMatrix_M = confusion_matrix(ymTest, M_resultado)
+    print(ymTest.shape)
+    print(confusionMatrix_M)
 
 def GraphViz():
     B_resultado, clf = Tree()

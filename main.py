@@ -37,4 +37,4 @@ def RunResultados():
 
 
 if __name__ == "__main__":
-    tree_baixa.ConfusionMatrixScore()
+    tree_alta.ConfusionMatrixScore()

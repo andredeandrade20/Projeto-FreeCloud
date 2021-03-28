@@ -34,15 +34,17 @@ def ConfusionMatrixScore():
     S_resultado, clf = Tree()
     XsTrain, XsTest, ysTrain, ysTest = pre.TrainTestSuperficie()
     confusionMatrix_S = confusion_matrix(ysTest, S_resultado)
+    print(ysTest.shape)
     print(confusionMatrix_S)
 
-## Não usadas
 def Cross_Score():
+    Xs, Ys, Xb, Yb, Xm, Ym, Xa, Ya = SepareScallingData()
     S_resultado, clf = Tree()
-    XsTrain, XsTest, ysTrain, ysTest = pre.TrainTestSupuperficieficie()
-    scores = cross_val_score(clf, XsTrain, XsTest, cv=5, scoring='accuracy')
+    XsTrain, XsTest, ysTrain, ysTest = pre.TrainTestSuperficie()
+    scores = cross_val_score(clf, Xs, Ys, cv = 3)
     print(scores)
 
+## Não usadas
 def TreeRegion():
     S_resultado, clf = Tree()
     XsTrain, XsTest, ysTrain, ysTest = pre.TrainTestSuperficie()
