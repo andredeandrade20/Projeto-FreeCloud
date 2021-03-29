@@ -17,6 +17,7 @@ import svm_media
 import svm_baixa
 import svm_superficie
 import preprocessing as pre
+import confusionmatrix as cm
 
 def RunScore():
     a = tree_superficie.ScoreTree()
@@ -37,4 +38,5 @@ def RunResultados():
 
 
 if __name__ == "__main__":
-    tree_alta.ConfusionMatrixScore()
+    cm.ConfusionMatrixScore()
+    tree_alta.ScoreTree()

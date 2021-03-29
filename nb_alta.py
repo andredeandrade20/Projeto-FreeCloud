@@ -8,7 +8,6 @@ def NB():
     clf = GaussianNB()
     clf = clf.fit(XaTrain, yaTrain)
     A_resultado = clf.predict(XaTest)
-    print(A_resultado)
     return A_resultado, clf
 
 def ScoreNB():
@@ -16,4 +15,3 @@ def ScoreNB():
     A_resultado, clf = NB()
     score_Train_A = clf.score(XaTrain,yaTrain)
     score_Test_A = clf.score(XaTest,yaTest)
-    print(score_Train_A, score_Test_A)

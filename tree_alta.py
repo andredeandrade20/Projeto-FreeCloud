@@ -13,7 +13,7 @@ from sklearn.metrics import plot_confusion_matrix
 
 def Tree():
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
-    clf = DecisionTreeClassifier(criterion = 'entropy', splitter = 'best', max_depth = 5)
+    clf = DecisionTreeClassifier(criterion = 'entropy', splitter = 'best')
     clf = clf.fit(XaTrain, yaTrain)
     A_resultado = clf.predict(XaTest)
     return A_resultado, clf
@@ -31,8 +31,9 @@ def ConfusionMatrixScore():
     A_resultado, clf = Tree()
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
     cm_A = confusion_matrix(yaTest, A_resultado)
-    plot_confusion_matrix(clf, XaTest, A_resultado)
-    plt.show()
+
+    print(cm_A)
+
 
 def GraphViz():
     B_resultado, clf = Tree()
