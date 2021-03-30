@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-import preprocessing as pre
-from sklearn.neural_network import LogisticRegression
+import preprocessing_alta as pre
+from sklearn.linear_model import LogisticRegression
 
 def LR():
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()

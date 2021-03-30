@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from FreeCloud import preprocessing as pre
+import preprocessing_alta as pre
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import export_graphviz
 from sklearn import metrics

@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import preprocessing as pre
+import preprocessing_alta as pre
 from sklearn.neighbors import KNeighborsClassifier
 
 def KNN():

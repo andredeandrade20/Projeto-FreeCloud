@@ -1,11 +1,11 @@
 import pandas as pd
 import numpy as np
-import preprocessing as pre
-from sklearn.svm import SVC
+import preprocessing_alta as pre
+from sklearn.svm import LinearSVC
 
 def SVC():
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
-    clf = SVC()
+    clf = LinearSVC()
     clf = clf.fit(XaTrain, yaTrain)
     A_resultado = clf.predict(XaTest)
     print(A_resultado)
