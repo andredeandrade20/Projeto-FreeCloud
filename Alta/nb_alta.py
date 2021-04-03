@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import preprocessing_alta as pre
 from sklearn.naive_bayes import GaussianNB
+import confusionmatrix as cm
 
 def NB():
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
@@ -10,8 +11,14 @@ def NB():
     A_resultado = clf.predict(XaTest)
     return A_resultado, clf
 
-def ScoreNB():
-    XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
+def ConfusionMatrixNB():
     A_resultado, clf = NB()
-    score_Train_A = clf.score(XaTrain,yaTrain)
-    score_Test_A = clf.score(XaTest,yaTest)
+    XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
+    ConfusionMatrixNB = cm.ConfusionMatrix(yaTest,A_resultado)
+    return ConfusionMatrixNB
+
+def EvaluateNBClouds(ConfusionMatrixNB):
+    cm.ConfusionMatrixScoreClouds(ConfusionMatrixNB)
+
+def EvaluateNBTotal(ConfusionMatrixNB):
+    cm.ConfusionMatrixScoreTotal(ConfusionMatrixNB)

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import preprocessing_alta as pre
 from sklearn.ensemble import RandomForestClassifier
-from sklearn import metrics
+import confusionmatrix as cm
 
 def RandomTree():
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
@@ -11,11 +11,14 @@ def RandomTree():
     A_resultado = clf.predict(XaTest)
     return A_resultado, clf
 
-def ScoreRandomTree():
-    A_resultado, clf = Tree()
+def ConfusionMatrixRandomTree():
+    A_resultado, clf = RandomTree()
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
-    score_Train_A = clf.score(XaTrain,yaTrain)
-    score_Test_A = clf.score(XaTest,yaTest)
-    score_resultado_A = clf.score(XaTest, A_resultado)
-    print(score_Train_A, score_Test_A, score_resultado_A)
-    return score_Train_A, score_Test_A, score_resultado_A
+    ConfusionMatrixRandomTree = cm.ConfusionMatrix(yaTest,A_resultado)
+    return ConfusionMatrixRandomTree
+
+def EvaluateRandomTreeClouds(ConfusionMatrixRandomTree):
+    cm.ConfusionMatrixScoreClouds(ConfusionMatrixRandomTree)
+
+def EvaluateRandomTreeTotal(ConfusionMatrixRandomTree):
+    cm.ConfusionMatrixScoreTotal(ConfusionMatrixRandomTree)

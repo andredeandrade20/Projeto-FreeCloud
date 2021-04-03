@@ -2,18 +2,23 @@ import pandas as pd
 import numpy as np
 import preprocessing_alta as pre
 from sklearn.neural_network import MLPClassifier
+import confusionmatrix as cm
 
 def MLP():
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
-    clf = MLPClassifier()
+    clf = MLPClassifier(max_iter = 600)
     clf = clf.fit(XaTrain, yaTrain)
     A_resultado = clf.predict(XaTest)
-    print(A_resultado)
     return A_resultado, clf
 
-def ScoreMLP():
-    XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
+def ConfusionMatrixMLP():
     A_resultado, clf = MLP()
-    score_Train_A = clf.score(XaTrain,yaTrain)
-    score_Test_A = clf.score(XaTest,yaTest)
-    print(score_Train_A, score_Test_A)
+    XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
+    ConfusionMatrixMLP = cm.ConfusionMatrix(yaTest,A_resultado)
+    return ConfusionMatrixMLP
+
+def EvaluateMLPClouds(ConfusionMatrixMLP):
+    cm.ConfusionMatrixScoreClouds(ConfusionMatrixMLP)
+
+def EvaluateMLPTotal(ConfusionMatrixMLP):
+    cm.ConfusionMatrixScoreTotal(ConfusionMatrixMLP)

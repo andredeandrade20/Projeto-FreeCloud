@@ -2,18 +2,23 @@ import pandas as pd
 import numpy as np
 import preprocessing_alta as pre
 from sklearn.linear_model import LogisticRegression
+import confusionmatrix as cm
 
 def LR():
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
-    clf = LogisticRegression()
+    clf = LogisticRegression(solver = 'lbfgs', multi_class = 'multinomial', max_iter = 200)
     clf = clf.fit(XaTrain, yaTrain)
     A_resultado = clf.predict(XaTest)
-    print(A_resultado)
     return A_resultado, clf
 
-def ScoreLR():
-    XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
+def ConfusionMatrixLR():
     A_resultado, clf = LR()
-    score_Train_A = clf.score(XaTrain,yaTrain)
-    score_Test_A = clf.score(XaTest,yaTest)
-    print(score_Train_A, score_Test_A)
+    XaTrain, XaTest, yaTrain, yaTest = pre.TrainTestAlta()
+    ConfusionMatrixLR = cm.ConfusionMatrix(yaTest,A_resultado)
+    return ConfusionMatrixLR
+
+def EvaluateLRClouds(ConfusionMatrixLR):
+    cm.ConfusionMatrixScoreClouds(ConfusionMatrixLR)
+
+def EvaluateLRTotal(ConfusionMatrixLR):
+    cm.ConfusionMatrixScoreTotal(ConfusionMatrixLR)
