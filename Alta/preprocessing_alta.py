@@ -15,7 +15,7 @@ def loadData():
 def CleanConverseData():
     df = loadData()
 ## Exclusão das colunas que não serão usadas
-    df = df.drop(['Estação'], axis = 1)
+    df = df.drop(['Estação', 'Banda 1 Media', 'Banda 2 Media', 'Banda 3 Media', 'Banda 4 Media', 'Banda 5 Media', 'Banda 6 Media', 'Banda 7 Media', 'Banda 8 Media', 'Banda 9 Media', 'Banda 10 Media', 'Banda 11 Media', 'Banda 12 Media', 'Banda 13 Media', 'Banda 14 Media', 'Banda 15 Media', 'Banda 16 Media', 'Banda 1 Desv. Pad', 'Banda 2 Desvio Padrão', 'Banda 3 Desvio Padrão', 'Banda 4 Desvio Padrão', 'Banda 5 Desvio Padrão', 'Banda 6 Desvio Padrão', 'Banda 7 Desvio Padrão', 'Banda 8 Desvio Padrão', 'Banda 9 Desvio Padrão', 'Banda 10 Desvio Padrão', 'Banda 11 Desvio Padrão', 'Banda 12 Desvio Padrão', 'Banda 13 Desvio Padrão', 'Banda 14 Desvio Padrão', 'Banda 15 Desvio Padrão', 'Banda 16 Desvio Padrão', 'Banda 1 Variância', 'Banda 2 Variância', 'Banda 3 Variância', 'Banda 4 Variância', 'Banda 5 Variância', 'Banda 6 Variância', 'Banda 7 Variância', 'Banda 8 Variância', 'Banda 9 Variância', 'Banda 10 Variância', 'Banda 11 Variância', 'Banda 12 Variância', 'Banda 13 Variância', 'Banda 14 Variância', 'Banda 15 Variância', 'Banda 16 Variância'], axis = 1)
 ## Conversão do formato da data
     df['Data'] = pd.to_datetime(df['Data'])
     df['Data'] = df['Data'].dt.strftime('%Y-%m-%d')
@@ -27,24 +27,29 @@ def CleanConverseData():
 ## Exclusão das duas colunas anteriores
     df.drop(['Data','Horario'], axis = 1, inplace = True)
 ## Reorganização das colunas
-    df = df[['Time', 'Nuvem Baixa','Nuvem Média', 'Nuvem Alta', 'Latitude', 'Longitude', 'Banda 1', 'Banda 2', 'Banda 3', 'Banda 4', 'Banda 5', 'Banda 6', 'Banda 7', 'Banda 8', 'Banda 9', 'Banda 10', 'Banda 11', 'Banda 12', 'Banda 13', 'Banda 14', 'Banda 15', 'Banda 16', 'Banda 1 Media', 'Banda 2 Media', 'Banda 3 Media', 'Banda 4 Media', 'Banda 5 Media', 'Banda 6 Media', 'Banda 7 Media', 'Banda 8 Media', 'Banda 9 Media', 'Banda 10 Media', 'Banda 11 Media', 'Banda 12 Media', 'Banda 13 Media', 'Banda 14 Media', 'Banda 15 Media', 'Banda 16 Media', 'Banda 1 Desv. Pad', 'Banda 2 Desvio Padrão', 'Banda 3 Desvio Padrão', 'Banda 4 Desvio Padrão', 'Banda 5 Desvio Padrão', 'Banda 6 Desvio Padrão', 'Banda 7 Desvio Padrão', 'Banda 8 Desvio Padrão', 'Banda 9 Desvio Padrão', 'Banda 10 Desvio Padrão', 'Banda 11 Desvio Padrão', 'Banda 12 Desvio Padrão', 'Banda 13 Desvio Padrão', 'Banda 14 Desvio Padrão', 'Banda 15 Desvio Padrão', 'Banda 16 Desvio Padrão', 'Banda 1 Variância', 'Banda 2 Variância', 'Banda 3 Variância', 'Banda 4 Variância', 'Banda 5 Variância', 'Banda 6 Variância', 'Banda 7 Variância', 'Banda 8 Variância', 'Banda 9 Variância', 'Banda 10 Variância', 'Banda 11 Variância', 'Banda 12 Variância', 'Banda 13 Variância', 'Banda 14 Variância', 'Banda 15 Variância', 'Banda 16 Variância']]
+    df = df[['Nuvem Baixa','Nuvem Média', 'Nuvem Alta', 'Latitude', 'Longitude', 'Banda 1', 'Banda 2', 'Banda 3', 'Banda 4', 'Banda 5', 'Banda 6', 'Banda 7', 'Banda 8', 'Banda 9', 'Banda 10', 'Banda 11', 'Banda 12', 'Banda 13', 'Banda 14', 'Banda 15', 'Banda 16', 'Time']]
 ## Separação dos alvos de acordo com suas características
-    alta = df[(df.iloc[:,1] >= 0) & (df.iloc[:,2] >= 0) & (df.iloc[:,3] > 0)]
-    return alta, df
-
-def SepareScallingData():
-    alta, df = CleanConverseData()
-## Separação da variável alvo
-    Ya = alta.iloc[:,3].values
-## Separação do espaço amostral
-    Xa = alta.iloc[:,3:21].values
-## Chamada da função normalizadora
-    scaleX = StandardScaler()
-    Xa = scaleX.fit_transform(Xa.astype(float))
+    alta = df[(df.iloc[:,0] >= 0) & (df.iloc[:,1] >= 0) & (df.iloc[:,2] > 0)]
+    Ya = alta.iloc[:,2]
+    Xa = alta.iloc[:,3:]
     return Xa, Ya
 
-## Separação dos treinos de dado e teste
+def Categorization(X):
+    X = pd.get_dummies(X, columns = ['Time'], sparse = False)
+    return X
+
 def TrainTestAlta():
-    Xa, Ya = SepareScallingData()
+    Xa, Ya = CleanConverseData()
     XaTrain, XaTest, yaTrain, yaTest = train_test_split(Xa, Ya, test_size = 0.2)
     return XaTrain, XaTest, yaTrain, yaTest
+
+def ScallingData(XTrain, XTest):
+    scaleX = StandardScaler()
+    XTrain.iloc[:,0:18] = scaleX.fit_transform(XTrain.iloc[:,0:18])
+    XTest.iloc[:,0:18] = scaleX.fit_transform(XTest.iloc[:,0:18])
+    return XTrain, XTest
+
+def Data():
+    XaTrain, XaTest, yaTrain, yaTest = TrainTestAlta()
+    XaTrain, XaTest = ScallingData(XaTrain, XaTest)
+    return XaTrain.values, XaTest.values, yaTrain.values, yaTest.values

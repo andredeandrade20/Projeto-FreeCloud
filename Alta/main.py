@@ -96,4 +96,4 @@ def RunModels():
     RunTotalSVC()
 
 if __name__ == "__main__":
-    RunTotalMLP()
+    mlp.plot()
