@@ -26,12 +26,12 @@ def EvaluateMLPClouds(ConfusionMatrixMLP):
 def EvaluateMLPTotal(ConfusionMatrixMLP):
     cm.ConfusionMatrixScoreTotal(ConfusionMatrixMLP)
 
-def plot():
-    A_resultado, clf = MLP()
-    XaTrain, XaTest, yaTrain, yaTest = pre.Data()
-    plt.scatter(XaTest[:,-1], yaTest, color = 'red')
-    plt.plot(XaTest[:,-1], A_resultado, color = 'blue')
-    plt.xlabel("Tempo")
-    plt.ylabel("Nuvem")
-    plt.title("Nuvem x Tempo")
-    plt.show()
+# def plot():
+#    A_resultado, clf = MLP()
+#    XaTrain, XaTest, yaTrain, yaTest = pre.Data()
+#    plt.scatter(XaTest[:,1], yaTest, color = 'red')
+#    plt.plot(XaTest[:,1], A_resultado, color = 'blue')
+#    plt.xlabel("Tempo")
+#    plt.ylabel("Nuvem")
+#    plt.title("Nuvem x Tempo")
+#    plt.show()
