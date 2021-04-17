@@ -4,6 +4,7 @@ import preprocessing_alta as pre
 from sklearn.svm import LinearSVC
 import confusionmatrix as cm
 
+
 def Model(clf):
     XaTrain, XaTest, yaTrain, yaTest = pre.TrainData()
     clf = LinearSVC(max_iter = 10000)

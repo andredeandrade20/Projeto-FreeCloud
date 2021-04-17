@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
+from imblearn.over_sampling import SMOTE
 
 def loadData():
     chunks = []
@@ -38,9 +39,21 @@ def Categorization(X):
     X = pd.get_dummies(X, columns = ['Time'], sparse = False)
     return X
 
-def TrainTestAlta():
+## Aplica a técnica SMOTE para criar novos dados que são minoritários no conjunto de dados
+def SMOTE_apply(data_X, data_y):
+  smote = SMOTE()
+  X_balanc, y_balanc = smote.fit_resample(data_X, data_y)
+  return X_balanc, y_balanc
+
+def SmoteData():
     Xa, Ya = CleanConverseData()
-    XaTrain, XaTest, yaTrain, yaTest = train_test_split(Xa, Ya, test_size = 0.2)
+    Xa = Categorization(Xa)
+    Xa_smote , Ya_smote = SMOTE_apply(Xa, Ya)
+    return Xa_smote , Ya_smote
+
+def TrainTestAlta():
+    Xa_smote , Ya_smote = SmoteData()
+    XaTrain, XaTest, yaTrain, yaTest = train_test_split(Xa_smote, Ya_smote, test_size = 0.2)
     return XaTrain, XaTest, yaTrain, yaTest
 
 def ScallingData(XTrain, XTest):

@@ -1,20 +1,24 @@
 import pandas as pd
 import numpy as np
-import preprocessing_alta as pre
+import preprocessing as pre
 from sklearn.tree import DecisionTreeClassifier
 import confusionmatrix as cm
 from sklearn.model_selection import GridSearchCV
 import time
 from sklearn import metrics
+import cross_validation as cv
 
 def Tree():
     XaTrain, XaTest, yaTrain, yaTest = pre.Data()
-    XaTrain = XaTrain[:,0:18]
-    XaTest = XaTest[:,0:18]
+    XaTrain, XaTest = pre.Chnl(XaTrain,XaTest)
     clf = DecisionTreeClassifier(max_depth=12, min_samples_leaf=3, min_samples_split=0.1)
     clf = clf.fit(XaTrain, yaTrain)
     A_resultado = clf.predict(XaTest)
-    return A_resultado, clf
+    return A_resultado, clf, XaTrain, XaTest, yaTrain, yaTest
+
+def CrossValTree():
+    A_resultado, clf, XaTrain, XaTest, yaTrain, yaTest = Tree()
+    cv.CrossValidation(clf, XaTrain, yaTrain)
 
 def ConfusionMatrixTree():
     A_resultado, clf = Tree()

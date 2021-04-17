@@ -95,5 +95,17 @@ def RunModels():
     RunTotalMLP()
     RunTotalSVC()
 
-if __name__ == "__main__":
+def RunSearchModels():
+    knn.KNNClass()
     tree.TreeClass()
+    lr.LRClass()
+    nb.NBClass()
+    random.RandomTreeClass()
+
+def RunWeightModels():
+    random.RandomTreeClass()
+    svm.SVMClass()
+    mlp.MLPClass()
+
+if __name__ == "__main__":
+    tree.TreeMetrics()
