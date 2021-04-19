@@ -97,3 +97,16 @@ def ConfusionMatrixScoreClouds(ConfusionMatrix):
 def ConfusionMatrixScoreTotal(ConfusionMatrix):
     cm_1_acc, cm_1_recall, cm_1_prec, cm_1_f1, cm_2_acc, cm_2_recall, cm_2_prec, cm_2_f1, cm_3_acc, cm_3_recall, cm_3_prec, cm_3_f1, cm_4_acc, cm_4_recall, cm_4_prec, cm_4_f1,  cm_5_acc, cm_5_recall, cm_5_prec, cm_5_f1,  cm_6_acc, cm_6_recall, cm_6_prec, cm_6_f1,  cm_7_acc, cm_7_recall, cm_7_prec, cm_7_f1,  cm_8_acc, cm_8_recall, cm_8_prec, cm_8_f1,  cm_9_acc, cm_9_recall, cm_9_prec, cm_9_f1,  cm_total_acc, cm_total_recall, cm_total_prec, cm_total_f1 = ConfusionMatrixCompute(ConfusionMatrix)
     print('Acurácia:', cm_total_acc, '\nRecall:', cm_total_recall, '\nPrecisão:', cm_total_prec, '\nF1_score:', cm_total_f1)
+
+## Matriz de confusão
+def ConfusionMatrixTree():
+    A_resultado, clf = Tree()
+    XaTrain, XaTest, yaTrain, yaTest = pre.Data()
+    ConfusionMatrixTree = cm.ConfusionMatrix(yaTest,A_resultado)
+    return ConfusionMatrixTree
+
+def EvaluateTreeClouds(ConfusionMatrixTree):
+    cm.ConfusionMatrixScoreClouds(ConfusionMatrixTree)
+
+def EvaluateTreeTotal(ConfusionMatrixTree):
+    cm.ConfusionMatrixScoreTotal(ConfusionMatrixTree)

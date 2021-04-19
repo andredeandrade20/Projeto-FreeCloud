@@ -5,6 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import SMOTE
+from sklearn.decomposition import PCA
 
 ## Função faz a leitura dos dados e aplica o método chunks para ler cada parte dos dados separadamente e depois juntá-los novamente para otimizar a leitura
 def loadData():
@@ -45,20 +46,28 @@ def Categorization(X):
 ## Aplica a técnica SMOTE para criar novos dados que são minoritários no conjunto de dados
 def SMOTE_apply(X, y):
   smote = SMOTE()
-  X_balanc, y_balanc = smote.fit_resample(X, y)
-  return X_balanc, y_balanc
+  X_smote, y_smote = smote.fit_resample(X, y)
+  return X_smote, y_smote
+
+## Função para aplicar o método PCA para reduzir a dimensionalidade dos dados
+def PCA_apply(X):
+  pca = PCA()
+  X.iloc[:,0:49] = pca.fit_transform(X.iloc[:,0:49])
+  X.iloc[:,0:49] = pd.DataFrame(X.iloc[:,0:49])
+  return X
 
 ## Função para aplicar o método SMOTE para os dados do conjunto
-def SmoteData():
+def SmotePCAData():
     Xa, Ya = CleanData()
     Xa = Categorization(Xa)
-    Xa_smote , Ya_smote = SMOTE_apply(Xa, Ya)
-    return Xa_smote , Ya_smote
+    Xa_balanced , Ya_balanced = SMOTE_apply(Xa, Ya)
+    Xa_balanced = PCA_apply(Xa_balanced)
+    return Xa_balanced, Ya_balanced
 
 ## Separa os dados em dados de treino e teste
 def TrainTestAlta():
-    Xa_smote , Ya_smote = SmoteData()
-    XaTrain, XaTest, yaTrain, yaTest = train_test_split(Xa_smote, Ya_smote, test_size = 0.2)
+    Xa_balanced , Ya_balanced = SmotePCAData()
+    XaTrain, XaTest, yaTrain, yaTest = train_test_split(Xa_balanced, Ya_balanced, test_size = 0.2)
     return XaTrain, XaTest, yaTrain, yaTest
 
 def ScallingData(XTrain, XTest):
@@ -81,8 +90,3 @@ def Chnl(XTrain, XTest):
     XTrain = XTrain.iloc[:,[Canal, Media, Desvio, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 58, 60, 71, 72, 73, 74, 75, 76, 77, 78, 78, 80]]
     XTest = XTest.iloc[:,[Canal, Media, Desvio, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 58, 60, 71, 72, 73, 74, 75, 76, 77, 78, 78, 80]]
     return XTrain, XTest
-
-def Channel1():
-    XaTrain, XaTest, yaTrain, yaTest = Data()
-    XaTrain, XaTest = Chnl(XaTrain,XaTest)
-    print(XaTrain)
