@@ -84,7 +84,7 @@ def Data():
 ## Função para separar somente os dados utilizados para análise do primeiro canal
 def Chnl(XTrain, XTest):
     print("Banda: ")
-    Canal = int(input())
+    Canal = float(input())
     Media = Canal + 1
     Desvio = Media + 1
     XTrain = XTrain.iloc[:,[Canal, Media, Desvio, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 58, 60, 71, 72, 73, 74, 75, 76, 77, 78, 78, 80]]
