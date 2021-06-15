@@ -1,8 +1,8 @@
 from sklearn import metrics
 from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import cross_validate
+import matplotlib.pyplot as plt
 
-## Validação cruzada
+## Validação cruzada K-Fold que separa os conjuntos de treino e teste e tira as métricas médias
 def CrossValidation(clf, X, y):
     acc = cross_val_score(clf, X, y, cv = 10, scoring = 'balanced_accuracy', error_score = 'raise')
     prec = cross_val_score(clf, X, y, cv = 10, scoring = 'precision_weighted', error_score = 'raise')
@@ -14,3 +14,7 @@ def CrossValidation(clf, X, y):
     print("Recall: ", rec.mean())
     print("F1-Score: ", f1.mean())
     print("ROC-AUC: ", roc.mean())
+
+def ConfusionMatrix(clf, XTest, YTest):
+    plot_confusion_matrix(clf, XTest, YTest)
+    plt.savefig('cm.png')
